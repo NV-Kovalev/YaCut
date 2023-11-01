@@ -16,13 +16,6 @@
           <form method="POST", novalidate>
             {{ form.csrf_token }}
             <div>
-              <p>
-                {% if form.errors %}
-                  {% for error in form.errors %}
-                    <span style="color: red">{{ error }}</span>
-                  {% endfor %}
-                {% endif %}
-              </p>
               <div>
                 {{ form.original_link(class="form-control form-control-lg py-2 mb-3", id="form-title", type="url",
                     placeholder="Длинная ссылка")}}
@@ -62,7 +55,9 @@
               </div>
               <div class="col-sm">
                 <p class="text-center">
-                <h5 class="text-center">{{message}}</h5>
+                <h5 class="text-center">
+                  <a href="{{ message }}"> {{ message }}</a>
+                </h5>
                 </p>
               </div>
               <div class="col-sm">
