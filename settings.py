@@ -10,3 +10,8 @@ class Config(object):
 
 
 BASE_URL = os.getenv('HOST', default='http://localhost/')
+CUSTOM_ID_LENGHT = {
+    'min': 1,
+    'max': 16
+}
+SHORT_ID_GEN_LENGHT = 6

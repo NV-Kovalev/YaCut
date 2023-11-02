@@ -2,6 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import URLField, StringField, SubmitField
 from wtforms.validators import DataRequired, Length, Optional, Regexp, URL
 
+from settings import CUSTOM_ID_LENGHT
+
 
 class URLForm(FlaskForm):
     """
@@ -18,9 +20,15 @@ class URLForm(FlaskForm):
     custom_id = StringField(
         'Вариант короткой ссылки',
         validators=[
-            Length(1, 16, message='Ссылка должна быть не больше 16 символов'),
+            Length(
+                CUSTOM_ID_LENGHT['min'], CUSTOM_ID_LENGHT['max'],
+                message=f'Ссылка должна быть не больше '
+                        f'{CUSTOM_ID_LENGHT["max"]} символов'
+            ),
+            Regexp(
+                r'^[A-Za-z0-9_]+$',
+                message='Используйте только латинские буквы и цифры'),
             Optional(),
-            Regexp(r'^[A-Za-z0-9_]+$', message='Используйте только латинские буквы и цифры')
         ]
     )
     submit = SubmitField('Создать')

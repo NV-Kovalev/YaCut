@@ -24,3 +24,8 @@ class URLMap(db.Model):
         for field in ['original', 'short']:
             if field in data:
                 setattr(self, field, data[field])
+
+    def add_and_commit(self):
+        db.session.add(self)
+        db.session.commit()
+        return self

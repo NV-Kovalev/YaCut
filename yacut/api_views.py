@@ -1,53 +1,29 @@
 from http import HTTPStatus
-from re import match
 
 from flask import jsonify, request
 
-from . import app, db
+from . import app
 from .error_handlers import InvalidAPIUsage
 from .models import URLMap
 from .utils import get_unique_short_id
+from .validators import api_views_validator
 
 
 @app.route('/api/id/', methods=['POST'])
 def get_short_link():
     """Создание короткой ссылки"""
+    # Валидация полученных данных.
     data = request.get_json()
+    api_views_validator(data)
 
-    # Проверка наличия нужных ключей.
-    if not data:
-        raise InvalidAPIUsage('Отсутствует тело запроса')
-    if 'url' not in data:
-        raise InvalidAPIUsage('\"url\" является обязательным полем!')
-
-    # Валидация полученного URL.
-    original_link = URLMap.query.filter_by(original=data['url']).first()
-    if original_link:
-        raise InvalidAPIUsage(
-            'Предложенный вариант короткой ссылки уже существует.')
-
-    # Проверка наличия и валидация полученной короткой ссылки.
+    # Получаем короткий id.
     if data.get('custom_id'):
-        if len(data['custom_id']) > 16:
-            raise InvalidAPIUsage(
-                'Указано недопустимое имя для короткой ссылки')
-        if not match(r'^[A-Za-z0-9_]+$', data['custom_id']):
-            raise InvalidAPIUsage(
-                'Указано недопустимое имя для короткой ссылки')
-        if URLMap.query.filter_by(short=data['custom_id']).first():
-            raise InvalidAPIUsage(
-                'Предложенный вариант короткой ссылки уже существует.')
-        short_id = data['custom_id']
+        short_id = data.get('custom_id')
     else:
         short_id = get_unique_short_id()
 
     # Сохраение данных в БД.
-    url = URLMap(
-        original=data['url'],
-        short=f'{short_id}',
-    )
-    db.session.add(url)
-    db.session.commit()
+    url = URLMap(original=data['url'], short=f'{short_id}').add_and_commit()
 
     # Возвращаем укороченную ссылку.
     return jsonify(url.to_dict()), HTTPStatus.CREATED
