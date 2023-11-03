@@ -7,17 +7,12 @@ from .models import URLMap
 
 def api_views_validator(data):
     """Валидатор проверяющий корректность полученных данных"""
+
     # Проверка наличия нужных ключей.
     if not data:
         raise InvalidAPIUsage('Отсутствует тело запроса')
     if 'url' not in data:
         raise InvalidAPIUsage('\"url\" является обязательным полем!')
-
-    # Валидация полученного URL.
-    original_link = URLMap.query.filter_by(original=data['url']).first()
-    if original_link:
-        raise InvalidAPIUsage(
-            'Предложенный вариант короткой ссылки уже существует.')
 
     # Проверка наличия и валидация полученной короткой ссылки.
     if data.get('custom_id'):

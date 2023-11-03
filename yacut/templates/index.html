@@ -19,24 +19,10 @@
               <div>
                 {{ form.original_link(class="form-control form-control-lg py-2 mb-3", id="form-title", type="url",
                     placeholder="Длинная ссылка")}}
-                <p>
-                  {% if form.original_link.errors %}
-                    {% for error in form.original_link.errors %}
-                      <span style="color: red">{{ error }}</span>
-                    {% endfor %}
-                  {% endif %}
-                </p>
               </div>
               <div>
                 {{ form.custom_id(class="form-control form-control-lg py-2 mb-3", type="text", id="form-link",
                   placeholder="Ваш вариант короткой ссылки")}}
-                <p>
-                  {% if form.custom_id.errors %}
-                    {% for error in form.custom_id.errors %}
-                      <span style="color: red">{{ error }}</span>
-                    {% endfor %}
-                  {% endif %}
-                </p>
               </div>
               {{ form.submit(class="btn btn-primary", value="Создать") }}
             </div>
@@ -67,6 +53,25 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
+    {% if form.custom_id.errors %}
+      {% for error in form.custom_id.errors %}
+        <div class="container">
+          <div class="row ">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+              <p class="text-center">
+              <h5 class="text-center">
+                <span style="color: red">{{ error }}</span>
+              </h5>
+              </p>
+            </div>
+            <div class="col-sm">
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
 
   </section>
 </main>

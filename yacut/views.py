@@ -17,16 +17,11 @@ def index_view():
     form = URLForm()
     if form.validate_on_submit():
 
-        # Валидация оригинальной ссылки.
-        if URLMap.query.filter_by(original=form.original_link.data).first():
-            flash('Предложенный вариант короткой ссылки уже существует.')
-            return render_template('index.html', form=form)
-
         # Проверка наличия и валидация предложенной короткой ссылки.
         if form.custom_id.data:
             if URLMap.query.filter_by(short=form.custom_id.data).first():
                 form.custom_id.errors = (
-                    f'Имя {form.custom_id.data} уже занято!',)
+                    'Предложенный вариант короткой ссылки уже существует.',)
                 return render_template('index.html', form=form)
             short_id = form.custom_id.data
         else:
