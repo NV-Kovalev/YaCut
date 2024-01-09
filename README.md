@@ -1,11 +1,12 @@
-### Проект Yacut
+# Проект Yacut
 
-## Сервис позволяющий укорачивать ссылки с помощью редиректа через наш сайт.
+## Используемые технолологии:
 
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Flask](https://img.shields.io/badge/Flask-005571?style=for-the-badge&logo=Flask)
+![sqlalchemy](https://img.shields.io/badge/sqlalchemy-%2300f.svg?style=for-the-badge)
 
-## Команда разработчиков:
-backend: Никита Ковалев
-frontend: Yandex Practicum
+## Сервис позволяющий укорачивать ссылки с помощью редиректа через наш сайт. Учебный проект на Flask
 
 ## Используемые технолологии:
 
@@ -14,18 +15,7 @@ sqlalchemy
 
 ## Как запустить проект:
 
-
-Клонировать репозиторий и перейти в него в командной строке:
-
-```
-git clone 
-```
-
-```
-cd yacut
-```
-
-Создать .env файл внутри директории проекта:
+Создать .env файл внутри директории проекта
 
 Пример файла .env
 
